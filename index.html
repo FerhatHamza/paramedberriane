@@ -28,7 +28,9 @@
     }
 
     img.logo {
-      width: 400px;
+      width: 100%; /* 👈 أصبح بعرض نفس الحقول والأزرار */
+      max-width: 100%;
+      border-radius: 10px;
       margin-bottom: 15px;
     }
 
@@ -90,7 +92,7 @@
 </head>
 <body>
   <div class="login-card">
-    <img src="assets/logo.png" alt="شعار المؤسسة" class="logo" style="height:80px">
+    <img src="assets/logo.png" alt="شعار المؤسسة" class="logo">
     <h2>نظام تسيير الحضور والاختيارات</h2>
     <p class="subtitle">مركز التكوين الشبه الطبي ببريان</p>
 
@@ -101,6 +103,6 @@
     <button onclick="login()">دخول</button>
   </div>
 
-  <footer>© 2025 مركز التكوين الشبه الطبي ببريان، مصلحة الإعلام الآلي</footer>
+  <footer>© 2025 مركز التكوين الشبه الطبي ببريان</footer>
 </body>
 </html>
