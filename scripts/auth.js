@@ -1,15 +1,17 @@
-// بسيط: تسجيل دخول محلي (غير آمن - للبدء فقط)
-document.getElementById('loginForm').addEventListener('submit', function(e){
-  e.preventDefault();
-  const user = document.getElementById('username').value.trim();
-  const pass = document.getElementById('password').value.trim();
-  if(user === 'responsable' && pass === '1234'){
-    localStorage.setItem('user', JSON.stringify({role:'responsable', username:user}));
-    location.href = 'dashboard.html';
-  } else if(user === 'admin' && pass === 'admin123'){
-    localStorage.setItem('user', JSON.stringify({role:'admin', username:user}));
-    location.href = 'admin.html';
+function login() {
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value.trim();
+  const errorMsg = document.getElementById('error-msg');
+
+  const users = {
+    admin: 'admin123',
+    responsable: '1234'
+  };
+
+  if (users[username] && users[username] === password) {
+    localStorage.setItem('user', username);
+    window.location.href = username === 'admin' ? 'admin.html' : 'dashboard.html';
   } else {
-    alert('بيانات الدخول خاطئة');
+    errorMsg.style.display = 'block';
   }
-});
+}
