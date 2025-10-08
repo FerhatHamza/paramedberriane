@@ -1,22 +1,53 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>لوحة المدير - paramedberriane</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700&display=swap" rel="stylesheet">
-<style>body{font-family:'Tajawal',sans-serif;background:#f7f7f7;margin:0;padding:20px}.container{max-width:1100px;margin:20px auto;background:#fff;padding:20px;border-radius:8px}</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة تحكم الإدارة | الملحقة شبه الطبية بريان</title>
+  <link rel="stylesheet" href="admin.css" />
+  <script defer src="scripts/api.js"></script>
+  <script defer src="scripts/admin.js"></script>
 </head>
 <body>
-<div class="container">
-  <h2>لوحة المدير - إحصائيات</h2>
-  <div id="stats"></div>
-  <div style="margin-top:12px">
-    <button id="exportStats">تصدير الإحصائيات (Excel)</button>
-    <button id="exportAbsences">تصدير الغيابات (Excel)</button>
-  </div>
-</div>
-<script src="scripts/api.js"></script>
-<script src="scripts/stats.js"></script>
+  <header>
+    <h1>📊 لوحة تحكم الإدارة</h1>
+  </header>
+
+  <main class="dashboard">
+    <section class="cards">
+      <div class="card"><h3>عدد الطلبة الكلي</h3><p id="totalStudents">-</p></div>
+      <div class="card"><h3>الحاضرون اليوم</h3><p id="presentToday">-</p></div>
+      <div class="card"><h3>الغيابات اليوم</h3><p id="absentToday">-</p></div>
+      <div class="card"><h3>نسبة الحضور</h3><p id="attendanceRate">-</p></div>
+    </section>
+
+    <section class="stats-section">
+      <h2>📘 نسب اختيار المواد</h2>
+      <table id="subjectsTable">
+        <thead><tr><th>المادة</th><th>عدد الطلبة</th><th>النسبة %</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section class="stats-section">
+      <h2>🏫 نسبة الحضور حسب القاعة</h2>
+      <table id="classesTable">
+        <thead><tr><th>القاعة</th><th>نسبة الحضور %</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section class="stats-section">
+      <h2>📋 آخر الغيابات</h2>
+      <table id="absencesTable">
+        <thead><tr><th>الاسم</th><th>القاعة</th><th>التاريخ</th><th>الحالة</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 الملحقة شبه الطبية بريان – Ferhat Hamza
+  </footer>
 </body>
 </html>
