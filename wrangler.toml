@@ -4,5 +4,5 @@ compatibility_date = "2025-10-07"
 
 [[d1_databases]]
 binding = "DB"
-database_name = "paramed_db"
+database_name = "paramed25_db"
 database_id = "f0fe935b-2657-4048-a964-5320779ae945"
