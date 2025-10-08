@@ -1,52 +1,137 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>لوحة المسؤول - paramedberriane</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700&display=swap" rel="stylesheet">
-<style>
-body{font-family:'Tajawal',sans-serif;background:#f7f7f7;margin:0;padding:20px}
-.header{display:flex;justify-content:space-between;align-items:center}
-.container{max-width:1100px;margin:20px auto;background:#fff;padding:20px;border-radius:8px}
-table{width:100%;border-collapse:collapse;margin-top:12px}
-th,td{border:1px solid #eee;padding:8px;text-align:right}
-th{background:#fafafa}
-button{padding:8px 12px;border-radius:4px;border:none;background:#28a745;color:#fff}
-input[type=number]{width:80px}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة تسجيل الغيابات | Paramed Berriane</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: #0d0d0d;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: #121212;
+      border-bottom: 1px solid #222;
+    }
+
+    header img {
+      height: 60px;
+    }
+
+    header h1 {
+      flex: 1;
+      font-size: 1.4rem;
+      margin: 0;
+    }
+
+    header .user {
+      font-size: 0.95rem;
+      color: #ccc;
+    }
+
+    .logout-btn {
+      background: #3b82f6;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .logout-btn:hover {
+      background: #2563eb;
+    }
+
+    h2 {
+      margin-top: 1.5rem;
+      font-weight: 600;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      padding: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      color: #fff;
+      padding: 2rem 1rem;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+    }
+
+    .card h3 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.4rem;
+    }
+
+    .card p {
+      margin: 0;
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    footer {
+      padding: 1rem;
+      font-size: 0.8rem;
+      color: #777;
+      border-top: 1px solid #222;
+      background: #121212;
+      margin-top: 2rem;
+    }
+  </style>
 </head>
 <body>
-<div class="header"><div><img src="assets/logo.png" style="height:50px"></div><h2>لوحة تسجيل الحضور</h2></div>
-<div class="container">
-  <label>اختر القاعة:</label>
-  <select id="classSelect"></select>
-  <button id="loadBtn">تحميل الطلاب</button>
-  <table id="studentsTbl" style="display:none">
-    <thead><tr><th>اللقب</th><th>الاسم</th><th>رقم التعريف</th><th>صباحًا</th><th>مساءً</th><th>الحالة</th></tr></thead>
-    <tbody></tbody>
-  </table>
-  <div style="margin-top:12px">
-    <label>اختيارات المواد (أدخل عدد لكل مادة للقاعة المحددة)</label><br>
-    إنجليزية <input type="number" id="english" min="0" value="0">
-    فرنسية <input type="number" id="french" min="0" value="0">
-    إسبانية <input type="number" id="spanish" min="0" value="0">
-    ألمانية <input type="number" id="german" min="0" value="0">
-    رياضيات <input type="number" id="math" min="0" value="0">
-    علوم <input type="number" id="science" min="0" value="0">
-    <button id="saveChoices">حفظ الاختيارات</button>
-  </div>
-  <div style="margin-top:12px">
-    <label>وضع الغياب عن طريق رقم التعريف (NIN)</label><br>
-    <input id="ninInput" placeholder="أدخل رقم التعريف">
-    <button id="markAbsent">وضع غائب</button>
-  </div>
-  <div style="margin-top:12px">
-    <button id="saveAttendance">حفظ الحضور</button>
-    <button id="exportAbsences">تصدير الغيابات (Excel)</button>
-  </div>
-</div>
-<script src="scripts/api.js"></script>
-<script src="scripts/attendance.js"></script>
+  <header>
+    <img src="logo.png" alt="شعار المؤسسة">
+    <h1>الملحقـة الجهوية ببريان للتكوين الشبه الطبي</h1>
+    <div>
+      <span class="user">👤 المسؤول</span>
+      <button class="logout-btn">خروج</button>
+    </div>
+  </header>
+
+  <h2>اختر القاعة لتسجيل الغيابات والاختيارات</h2>
+
+  <div class="grid" id="roomsGrid"></div>
+
+  <footer>
+    Ⓒ 2025 الملحقـة الجهوية ببريان — جميع الحقوق محفوظة
+  </footer>
+
+  <script>
+    const grid = document.getElementById("roomsGrid");
+    for (let i = 1; i <= 26; i++) {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `<h3>قاعة ${i}</h3><p>عدد الطلبة: —</p>`;
+      card.onclick = () => {
+        window.location.href = \`class.html?room=\${i}\`;
+      };
+      grid.appendChild(card);
+    }
+  </script>
 </body>
 </html>
