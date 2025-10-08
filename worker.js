@@ -2,100 +2,62 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const path = url.pathname;
-    const method = request.method;
 
-    // إعداد رؤوس الاستجابة الافتراضية
-    const headers = {
-      "Content-Type": "application/json; charset=UTF-8",
-      "Access-Control-Allow-Origin": "*",
-    };
+    // 🧭 API: جلب الطلبة حسب القاعة
+    if (path === "/api/students" && request.method === "GET") {
+      const classNum = url.searchParams.get("class");
 
-    // ✅ جلب قائمة الطلبة
-    if (path === "/api/students" && method === "GET") {
-      const result = await env.DB.prepare("SELECT * FROM students").all();
-      return new Response(JSON.stringify(result.results), { headers });
+      const query = `
+        SELECT nin, last_name, first_name, father_name, birth_date, class, wing
+        FROM students
+        WHERE class = ?;
+      `;
+
+      const { results } = await env.DB.prepare(query).bind(classNum).all();
+
+      return Response.json(results || []);
     }
 
-    // ✅ إضافة حضور أو غياب
-    if (path === "/api/attendance" && method === "POST") {
-      const data = await request.json();
-      const { nin, morning_present, evening_present, status } = data;
+    // 🧾 API: حفظ حالة الحضور
+    if (path === "/api/save" && request.method === "POST") {
+      const body = await request.json();
+      const { class: classNum, students } = body;
 
-      // البحث عن الطالب
-      const student = await env.DB.prepare("SELECT id FROM students WHERE nin = ?").bind(nin).first();
-      if (!student) {
-        return new Response(JSON.stringify({ error: "الطالب غير موجود" }), { status: 404, headers });
+      if (!Array.isArray(students)) {
+        return new Response("Invalid data", { status: 400 });
       }
 
-      await env.DB.prepare(`
-        INSERT INTO attendance (student_id, date, morning_present, evening_present, status)
-        VALUES (?, DATE('now'), ?, ?, ?)
-      `).bind(student.id, morning_present, evening_present, status).run();
+      const insertQuery = `
+        INSERT INTO attendance
+        (nin, class, morning, evening, reason, english, french, spanish, german, math, science, date)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+      `;
 
-      return new Response(JSON.stringify({ success: true }), { headers });
-    }
+      const today = new Date().toISOString().split("T")[0];
 
-    // ✅ تسجيل اختيارات المواد
-    if (path === "/api/choices" && method === "POST") {
-      const data = await request.json();
-      const { nin, english, french, spanish, german, math, science } = data;
-
-      const student = await env.DB.prepare("SELECT id FROM students WHERE nin = ?").bind(nin).first();
-      if (!student) {
-        return new Response(JSON.stringify({ error: "الطالب غير موجود" }), { status: 404, headers });
+      for (const s of students) {
+        await env.DB.prepare(insertQuery)
+          .bind(
+            s.nin,
+            classNum,
+            s.morning,
+            s.evening,
+            s.reason || "",
+            s.english || 0,
+            s.french || 0,
+            s.spanish || 0,
+            s.german || 0,
+            s.math || 0,
+            s.science || 0,
+            today
+          )
+          .run();
       }
 
-      await env.DB.prepare(`
-        INSERT INTO choices (student_id, english, french, spanish, german, math, science)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-        ON CONFLICT(student_id) DO UPDATE SET
-          english = excluded.english,
-          french = excluded.french,
-          spanish = excluded.spanish,
-          german = excluded.german,
-          math = excluded.math,
-          science = excluded.science
-      `).bind(student.id, english, french, spanish, german, math, science).run();
-
-      return new Response(JSON.stringify({ success: true }), { headers });
+      return Response.json({ success: true });
     }
 
-    // ✅ إحصائيات عامة
-    if (path === "/api/stats" && method === "GET") {
-      const absences = await env.DB.prepare(`
-        SELECT s.class, COUNT(a.id) as absents
-        FROM attendance a
-        JOIN students s ON a.student_id = s.id
-        WHERE a.morning_present = 0 OR a.evening_present = 0
-        GROUP BY s.class
-      `).all();
-
-      const choices = await env.DB.prepare(`
-        SELECT 
-          SUM(english) AS english,
-          SUM(french) AS french,
-          SUM(spanish) AS spanish,
-          SUM(german) AS german,
-          SUM(math) AS math,
-          SUM(science) AS science
-        FROM choices
-      `).first();
-
-      return new Response(JSON.stringify({ absences: absences.results, choices }), { headers });
-    }
-
-    // ✅ السماح بالـ OPTIONS (CORS)
-    if (method === "OPTIONS") {
-      return new Response(null, {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-          "Access-Control-Allow-Headers": "Content-Type",
-        },
-      });
-    }
-
-    // 🚫 أي مسار غير معروف
-    return new Response(JSON.stringify({ error: "Not Found" }), { status: 404, headers });
+    // 🌍 ملفات الواجهة (static)
+    return env.ASSETS.fetch(request);
   },
 };
