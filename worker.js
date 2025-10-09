@@ -8,7 +8,7 @@ export default {
       const classNum = url.searchParams.get("class");
 
       const query = `
-        SELECT nin, last_name, first_name, father_name, birth_date, class, wing
+        SELECT id, nin, last_name, first_name, father_name, birth_date, class, wing
         FROM students
         WHERE class = ?;
       `;
@@ -27,29 +27,21 @@ export default {
         return new Response("Invalid data", { status: 400 });
       }
 
-      const insertQuery = `
-        INSERT INTO attendance
-        (nin, class, morning, evening, reason, english, french, spanish, german, math, science, date)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-      `;
-
       const today = new Date().toISOString().split("T")[0];
+
+      const insertQuery = `
+        INSERT INTO attendance (student_id, date, morning_present, evening_present, status)
+        VALUES (?, ?, ?, ?, ?);
+      `;
 
       for (const s of students) {
         await env.DB.prepare(insertQuery)
           .bind(
-            s.nin,
-            classNum,
-            s.morning,
-            s.evening,
-            s.reason || "",
-            s.english || 0,
-            s.french || 0,
-            s.spanish || 0,
-            s.german || 0,
-            s.math || 0,
-            s.science || 0,
-            today
+            s.id,              // ✅ ربط معرف الطالب من جدول students
+            today,
+            s.morning_present || 0,
+            s.evening_present || 0,
+            s.status || ""
           )
           .run();
       }
@@ -62,7 +54,7 @@ export default {
       const today = new Date().toISOString().split("T")[0];
 
       // إجمالي الطلبة
-      const { results: students } = await env.DB.prepare("SELECT * FROM students").all();
+      const { results: students } = await env.DB.prepare("SELECT id FROM students").all();
       const total_students = students.length;
 
       // الحضور اليوم
@@ -82,16 +74,17 @@ export default {
       const absent_today = absent[0]?.count || 0;
 
       // النسبة العامة
-      const global_rate = total_students > 0 ? Math.round((present_today / total_students) * 100) : 0;
+      const global_rate =
+        total_students > 0 ? Math.round((present_today / total_students) * 100) : 0;
 
       // نسب الحضور حسب القاعات
       const { results: classStats } = await env.DB.prepare(`
-        SELECT class,
-          ROUND(AVG(CASE WHEN morning_present = 1 OR evening_present = 1 THEN 1 ELSE 0 END) * 100) AS rate
-        FROM attendance
-        JOIN students ON attendance.student_id = students.id
-        WHERE date = ?
-        GROUP BY class;
+        SELECT s.class,
+          ROUND(AVG(CASE WHEN a.morning_present = 1 OR a.evening_present = 1 THEN 1 ELSE 0 END) * 100) AS rate
+        FROM attendance a
+        JOIN students s ON a.student_id = s.id
+        WHERE a.date = ?
+        GROUP BY s.class;
       `).bind(today).all();
 
       // نسب اختيار المواد
@@ -106,7 +99,7 @@ export default {
           spanish: "الإسبانية",
           german: "الألمانية",
           math: "الرياضيات",
-          science: "العلوم"
+          science: "العلوم",
         };
         return { name: nameMap[subj], count, rate };
       });
@@ -128,7 +121,7 @@ export default {
         global_rate,
         classes: classStats,
         subjects: subjectStats,
-        last_absences: lastAbsences
+        last_absences: lastAbsences,
       });
     }
 
