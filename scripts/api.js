@@ -1,25 +1,36 @@
 // ✨ Connect to your Cloudflare Worker API
-const API_BASE = "paramedberriane-api.ferhathamza17.workers.dev"; // 👈 غيّر هذا إلى اسم الـ Worker الحقيقي
+const API_BASE = "https://paramedberriane-api.ferhathamza17.workers.dev"; // ✅ تأكد من استخدام https://
 
 const API = {
+  // جلب الإحصائيات العامة (لـ admin.html)
+  getStats: async () => {
+    const resp = await fetch(`${API_BASE}/api/stats`);
+    if (!resp.ok) throw new Error("Erreur lors du chargement des stats");
+    return await resp.json();
+  },
+
+  // جلب قائمة القاعات
   getClasses: async () => {
     const resp = await fetch(`${API_BASE}/api/classes`);
     if (!resp.ok) throw new Error("Erreur lors du chargement des classes");
     return await resp.json();
   },
 
+  // جلب الطلاب حسب رقم القاعة
   getStudentsByClass: async (cls) => {
     const resp = await fetch(`${API_BASE}/api/students?class=${cls}`);
     if (!resp.ok) throw new Error("Erreur lors du chargement des étudiants");
     return await resp.json();
   },
 
+  // حفظ الغياب والحضور
   saveAttendance: async (classNum, students) => {
     const resp = await fetch(`${API_BASE}/api/save`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ class: classNum, students }),
     });
+    if (!resp.ok) throw new Error("Erreur lors de l'enregistrement des présences");
     return await resp.json();
   },
 };
