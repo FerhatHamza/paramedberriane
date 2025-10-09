@@ -48,8 +48,8 @@ header h1, footer {
 }
 
 .card {
-  background: linear-gradient(135deg, #4a90e2, #357abd);
-  color: white;
+  background-color: #ffffff; /* أبيض */
+  color: #000000;
   padding: 1rem;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
@@ -62,7 +62,7 @@ header h1, footer {
 .card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-  background: linear-gradient(135deg, #357abd, #2a5c91);
+  background-color: #f0f0f0; /* عند المرور بالفأرة */
 }
 
 /* ================================ */
