@@ -1,4 +1,4 @@
-name = "paramedberriane"
+name = "paramedberriane-api"
 main = "worker.js"
 compatibility_date = "2025-10-07"
 
