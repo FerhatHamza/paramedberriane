@@ -5,33 +5,24 @@ document.addEventListener("DOMContentLoaded", async () => {
   const studentsTableBody = document.querySelector("#studentsTable tbody");
   const saveBtn = document.getElementById("saveBtn");
 
-  // جلب القاعات من API
-  let classes = [];
-  try {
-    classes = await API.getClasses(); // يجب أن ترجع array من أسماء القاعات أو أرقامها
-  } catch (err) {
-    alert("حدث خطأ أثناء جلب القاعات: " + err.message);
-    return;
-  }
-
-  // إنشاء بطاقة لكل قاعة
-  classes.forEach(cls => {
+  // إنشاء بطاقات القاعات من 1 إلى 26 مباشرة
+  for (let i = 1; i <= 26; i++) {
     const card = document.createElement("div");
     card.className = "card";
-    card.textContent = `📍 ${cls}`;
+    card.textContent = `📍 القاعة ${i}`;
     cardContainer.appendChild(card);
 
     // عند الضغط على بطاقة القاعة
     card.addEventListener("click", async () => {
-      const classNum = cls;
+      const classNum = i; // رقم القاعة
       classTitle.textContent = `الطلاب في القاعة ${classNum}`;
       studentsSection.style.display = "block";
 
-      // جلب الطلاب
+      // جلب الطلاب من API حسب القاعة
       let students = [];
       try {
         students = await API.getStudentsByClass(classNum);
-        // التأكد من وجود كل الحقول
+        // التأكد من كل الحقول
         students = students.map(s => ({
           ...s,
           morning_present: s.morning_present || 0,
@@ -50,17 +41,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       // عرض الطلاب في الجدول
       studentsTableBody.innerHTML = "";
-
-      students.forEach((s, index) => {
+      students.forEach(s => {
         const tr = document.createElement("tr");
-
-        const morningClass = s.morning_present ? "present" : "absent";
-        const eveningClass = s.evening_present ? "present" : "absent";
-
         tr.innerHTML = `
           <td>${s.first_name} ${s.last_name}</td>
-          <td class="${morningClass}"><input type="checkbox" class="morning" ${s.morning_present ? "checked" : ""}></td>
-          <td class="${eveningClass}"><input type="checkbox" class="evening" ${s.evening_present ? "checked" : ""}></td>
+          <td class="${s.morning_present ? "present" : "absent"}"><input type="checkbox" class="morning" ${s.morning_present ? "checked" : ""}></td>
+          <td class="${s.evening_present ? "present" : "absent"}"><input type="checkbox" class="evening" ${s.evening_present ? "checked" : ""}></td>
           <td><input type="checkbox" class="english" ${s.english ? "checked" : ""}></td>
           <td><input type="checkbox" class="french" ${s.french ? "checked" : ""}></td>
           <td><input type="checkbox" class="spanish" ${s.spanish ? "checked" : ""}></td>
@@ -69,7 +55,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           <td><input type="checkbox" class="science" ${s.science ? "checked" : ""}></td>
         `;
 
-        // تحديث اللون عند تغيير checkbox
+        // تحديث اللون عند تغيير الحضور
         tr.querySelector(".morning").addEventListener("change", e => {
           tr.querySelector(".morning").parentElement.className = e.target.checked ? "present" : "absent";
         });
@@ -80,7 +66,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         studentsTableBody.appendChild(tr);
       });
 
-      // الزر الآن يستخدم classNum الصحيح
+      // حفظ الحضور والمواد
       saveBtn.onclick = async () => {
         const updatedStudents = [];
         const rows = studentsTableBody.querySelectorAll("tr");
@@ -100,12 +86,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
 
         try {
-          await API.saveAttendance(classNum, updatedStudents); // حفظ جميع البيانات للقاعة الصحيحة
+          await API.saveAttendance(classNum, updatedStudents);
           alert("تم حفظ البيانات بنجاح!");
         } catch (err) {
           alert("حدث خطأ أثناء الحفظ: " + err.message);
         }
       };
     });
-  });
+  }
 });
