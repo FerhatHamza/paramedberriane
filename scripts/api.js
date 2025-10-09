@@ -1,5 +1,5 @@
 // ✨ Connect to your Cloudflare Worker API
-const API_BASE = "paramedberriane-api.ferhathamza17.workers.dev"; // ✅ تأكد من استخدام https://
+const API_BASE = "https://paramedberriane-api.ferhathamza17.workers.dev"; // ✅ تأكد من استخدام https://
 
 const API = {
   // جلب الإحصائيات العامة (لـ admin.html)
