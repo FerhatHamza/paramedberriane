@@ -11,7 +11,7 @@ body {
   margin: 0;
   padding: 0;
   direction: rtl;
-  background-color: #f4f4f9;
+  background-color: #f0f2f5;
   color: #333;
 }
 
@@ -20,6 +20,7 @@ header, footer {
   color: white;
   padding: 1rem;
   text-align: center;
+  font-weight: 500;
 }
 
 header h1, footer {
@@ -36,6 +37,8 @@ header h1, footer {
 /* قسم بطاقات القاعات */
 .cards h2 {
   margin-bottom: 1rem;
+  font-size: 1.2rem;
+  color: #004080;
 }
 
 .card-container {
@@ -45,19 +48,21 @@ header h1, footer {
 }
 
 .card {
-  background-color: #fff;
+  background: linear-gradient(135deg, #4a90e2, #357abd);
+  color: white;
   padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
   text-align: center;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
   font-weight: 500;
 }
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  background: linear-gradient(135deg, #357abd, #2a5c91);
 }
 
 /* ================================ */
@@ -65,15 +70,16 @@ header h1, footer {
 .students-section {
   margin-top: 2rem;
   background-color: #fff;
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
 .students-section h2 {
   margin-top: 0;
   margin-bottom: 1rem;
   color: #004080;
+  font-weight: 600;
 }
 
 /* ================================ */
@@ -87,7 +93,7 @@ table {
 
 th, td {
   border: 1px solid #ddd;
-  padding: 0.5rem;
+  padding: 0.6rem;
   text-align: center;
 }
 
@@ -101,45 +107,76 @@ tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
+tr:hover {
+  background-color: #e6f0ff;
+}
+
+/* ================================ */
+/* تمييز الحضور والغياب */
+td.present {
+  background-color: #d4edda; /* أخضر فاتح */
+  color: #155724;
+  font-weight: 500;
+}
+
+td.absent {
+  background-color: #f8d7da; /* أحمر فاتح */
+  color: #721c24;
+  font-weight: 500;
+}
+
 /* ================================ */
 /* input & checkbox */
 input[type="checkbox"] {
   width: 18px;
   height: 18px;
   cursor: pointer;
+  transform: scale(1.1);
 }
 
 /* ================================ */
 /* زر الحفظ */
 button#saveBtn {
   margin-top: 1rem;
-  padding: 0.6rem 1.2rem;
+  padding: 0.7rem 1.5rem;
   background-color: #004080;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
-  font-weight: 500;
-  transition: background-color 0.2s;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 button#saveBtn:hover {
-  background-color: #0066cc;
+  background-color: #357abd;
+  transform: translateY(-2px);
 }
 
 /* ================================ */
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .card-container {
-    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
   }
 
   table th, table td {
-    padding: 0.4rem;
-    font-size: 0.85rem;
+    padding: 0.5rem;
+    font-size: 0.9rem;
   }
 
   button#saveBtn {
     width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .card-container {
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+  }
+
+  table {
+    font-size: 0.85rem;
   }
 }
