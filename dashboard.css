@@ -1,0 +1,145 @@
+/* ================================ */
+/* خط Tajawal للعربية والصفحة بالكامل */
+body, * {
+  font-family: 'Tajawal', sans-serif;
+  box-sizing: border-box;
+}
+
+/* ================================ */
+/* إعدادات أساسية للصفحة */
+body {
+  margin: 0;
+  padding: 0;
+  direction: rtl;
+  background-color: #f4f4f9;
+  color: #333;
+}
+
+header, footer {
+  background-color: #004080;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+
+header h1, footer {
+  margin: 0;
+}
+
+.dashboard {
+  max-width: 1200px;
+  margin: auto;
+  padding: 1rem;
+}
+
+/* ================================ */
+/* قسم بطاقات القاعات */
+.cards h2 {
+  margin-bottom: 1rem;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  font-weight: 500;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* ================================ */
+/* قسم جدول الطلاب */
+.students-section {
+  margin-top: 2rem;
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.students-section h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #004080;
+}
+
+/* ================================ */
+/* الجدول */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+th {
+  background-color: #004080;
+  color: white;
+  font-weight: 500;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* ================================ */
+/* input & checkbox */
+input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+/* ================================ */
+/* زر الحفظ */
+button#saveBtn {
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  background-color: #004080;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+button#saveBtn:hover {
+  background-color: #0066cc;
+}
+
+/* ================================ */
+/* Responsive */
+@media (max-width: 768px) {
+  .card-container {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  }
+
+  table th, table td {
+    padding: 0.4rem;
+    font-size: 0.85rem;
+  }
+
+  button#saveBtn {
+    width: 100%;
+  }
+}
