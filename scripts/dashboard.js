@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const saveBtn = document.getElementById("saveBtn");
 
 
-  async function loadStudentsTable(int classNum ) {
+  async function loadStudentsTable(classNum) {
   try {
     // مسح الجدول أولاً
     studentsTableBody.innerHTML = '';
