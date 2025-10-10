@@ -6,11 +6,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   const saveBtn = document.getElementById("saveBtn");
 
 
-  async function loadStudentsTable(classNum) {
+  async function loadStudentsTable(students) {
   try {
     // مسح الجدول أولاً
     studentsTableBody.innerHTML = '';
-    const students = await API.getStudentsByClass(classNum);
+    
     // استخدام for...of بدلاً من forEach للتعامل مع async/await
     for (const student of students) {
       try {
@@ -135,7 +135,7 @@ async function updateStudentAttendance(studentId, field, value) {
       }
 
       // عرض الطلاب في الجدول
-      loadStudentsTable(classNum);
+      loadStudentsTable(students);
 
       // حفظ الحضور والمواد
       saveBtn.onclick = async () => {
