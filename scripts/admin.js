@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       await API.getReady();
     }
     
-    getReadyBtn.addEventListener("click", () => {
+    getReadyBtn.addEventListener("click", async () => {
       await API.getReady();
       console.log("ok getReady");
     });
