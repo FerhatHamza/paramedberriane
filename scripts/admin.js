@@ -7,6 +7,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("absentToday").textContent = stats.absent_today;
     document.getElementById("attendanceRate").textContent = stats.global_rate + "%";
 
+    
+    const getReadyBtn = document.getElementById("PustBtn");
+
+    function handleClick() async{
+      await API.getReady();
+    }
+
+    getReadyBtn.addEventListener("click", handleClick);
+    
     const subjTbody = document.querySelector("#subjectsTable tbody");
     stats.subjects.forEach(s => {
       const tr = document.createElement("tr");
