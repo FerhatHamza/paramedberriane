@@ -15,8 +15,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     for (const student of students) {
       try {
         // جلب بيانات الحضور للطالب
-        const attendance = await API.getAttendanceById(student.id);
-        console.log("بيانات الحضور:", attendance);
+        
+        console.log("بيانات الحضور:", student);
         
         // إنشاء الصف
         const tr = document.createElement("tr");
