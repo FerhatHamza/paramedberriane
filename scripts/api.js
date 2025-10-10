@@ -2,6 +2,13 @@
 const API_BASE = "https://paramedberriane-api.ferhathamza17.workers.dev"; // ✅ تأكد من استخدام https://
 
 const API = {
+  getAtendanceById: async (studentId) => {
+    const resp = await fetch(`${API_BASE}/api/getAtendenceById?studentId=${studentId}`);
+    if (!resp.ok) throw new Error("Erreur lors du chargement des étudiants");
+    return await resp.json();
+  },
+
+  
   // جلب الإحصائيات العامة (لـ admin.html)
   getStats: async () => {
     const resp = await fetch(`${API_BASE}/api/stats`);
