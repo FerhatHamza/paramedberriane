@@ -14,10 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       await API.getReady();
     }
     
-    getReadyBtn.addEventListener("click", async () => {
-      await API.getReady();
-      console.log("ok getReady");
-    });
+    getReadyBtn.addEventListener("click", handleClick);
     
     const subjTbody = document.querySelector("#subjectsTable tbody");
     stats.subjects.forEach(s => {
