@@ -3,6 +3,7 @@ const API_BASE = "https://paramedberriane-api.ferhathamza17.workers.dev"; // ✅
 
 const API = {
   getAtendanceById: async (studentId) => {
+    console.log("from API");
     const resp = await fetch(`${API_BASE}/api/getAtendenceById?studentId=${studentId}`);
     if (!resp.ok) throw new Error("Erreur lors du chargement des étudiants");
     return await resp.json();
