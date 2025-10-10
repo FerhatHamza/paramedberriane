@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       // عرض الطلاب في الجدول
       studentsTableBody.innerHTML = "";
-      students.forEach(s => {
+      students.forEach(async s => {
         const tr = document.createElement("tr");
         const presenceAbs = await API.getAtendanceById(s.id);
         console.log("KKKKKKKKKKKKK:: ", presenceAbs);
