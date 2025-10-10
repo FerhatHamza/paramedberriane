@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     // مسح الجدول أولاً
     studentsTableBody.innerHTML = '';
-    students = await API.getStudentsByClass(classNum);
+    const students = await API.getStudentsByClass(classNum);
     // استخدام for...of بدلاً من forEach للتعامل مع async/await
     for (const student of students) {
       try {
