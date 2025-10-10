@@ -10,10 +10,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     
     const getReadyBtn = document.getElementById("PustBtn");
 
-    function handleClick() async{
+    async function handleClick() {
       await API.getReady();
     }
-
+    
     getReadyBtn.addEventListener("click", handleClick);
     
     const subjTbody = document.querySelector("#subjectsTable tbody");
