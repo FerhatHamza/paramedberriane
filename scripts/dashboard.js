@@ -45,14 +45,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td>${s.first_name} ${s.last_name}</td>
-          <td class="${!s.morning_present ? "present" : "absent"}"><input type="checkbox" class="morning" ${!s.morning_present ? "checked" : ""}></td>
+          <td class="${!s.morning_present ? "present" : "absent"}"><input type="checkbox" class="morning" ${!s.morning_present ? "checked" : ""}></td>       
+          <td><input type="checkbox" class="math" ${s.math ? "checked" : ""}></td>
+          <td><input type="checkbox" class="science" ${s.science ? "checked" : ""}></td>
           <td class="${s.evening_present ? "present" : "absent"}"><input type="checkbox" class="evening" ${s.evening_present ? "checked" : ""}></td>
           <td><input type="checkbox" class="english" ${s.english ? "checked" : ""}></td>
           <td><input type="checkbox" class="french" ${s.french ? "checked" : ""}></td>
           <td><input type="checkbox" class="spanish" ${s.spanish ? "checked" : ""}></td>
           <td><input type="checkbox" class="german" ${s.german ? "checked" : ""}></td>
-          <td><input type="checkbox" class="math" ${s.math ? "checked" : ""}></td>
-          <td><input type="checkbox" class="science" ${s.science ? "checked" : ""}></td>
         `;
 
         // تحديث اللون عند تغيير الحضور
