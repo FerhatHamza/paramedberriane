@@ -43,6 +43,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       studentsTableBody.innerHTML = "";
       students.forEach(s => {
         const tr = document.createElement("tr");
+        const presenceAbs = await API.HAMZA
         tr.innerHTML = `
           <td>${s.first_name} ${s.last_name}</td>
           <td class="${!s.morning_present ? "present" : "absent"}"><input type="checkbox" class="morning" ${!s.morning_present ? "checked" : ""}></td>       
