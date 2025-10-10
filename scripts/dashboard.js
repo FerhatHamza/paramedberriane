@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const saveBtn = document.getElementById("saveBtn");
 
 
-  async function loadStudentsTable() {
+  async function loadStudentsTable(int classNum ) {
   try {
     // مسح الجدول أولاً
     studentsTableBody.innerHTML = '';
@@ -135,7 +135,7 @@ async function updateStudentAttendance(studentId, field, value) {
       }
 
       // عرض الطلاب في الجدول
-      loadStudentsTable();
+      loadStudentsTable(classNum);
 
       // حفظ الحضور والمواد
       saveBtn.onclick = async () => {
