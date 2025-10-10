@@ -5,6 +5,101 @@ document.addEventListener("DOMContentLoaded", async () => {
   const studentsTableBody = document.querySelector("#studentsTable tbody");
   const saveBtn = document.getElementById("saveBtn");
 
+
+  async function loadStudentsTable() {
+  try {
+    // مسح الجدول أولاً
+    studentsTableBody.innerHTML = '';
+    
+    // استخدام for...of بدلاً من forEach للتعامل مع async/await
+    for (const student of students) {
+      try {
+        // جلب بيانات الحضور للطالب
+        const attendance = await API.getAttendanceById(student.id);
+        console.log("بيانات الحضور:", attendance);
+        
+        // إنشاء الصف
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${student.first_name} ${student.last_name}</td>
+          <td class="${attendance.morning_present ? 'present' : 'absent'}">
+            <input type="checkbox" class="morning" ${attendance.morning_present ? 'checked' : ''}>
+          </td>       
+          <td><input type="checkbox" class="math" ${student.math ? 'checked' : ''}></td>
+          <td><input type="checkbox" class="science" ${student.science ? 'checked' : ''}></td>
+          <td class="${attendance.evening_present ? 'present' : 'absent'}">
+            <input type="checkbox" class="evening" ${attendance.evening_present ? 'checked' : ''}>
+          </td>
+          <td><input type="checkbox" class="english" ${student.english ? 'checked' : ''}></td>
+          <td><input type="checkbox" class="french" ${student.french ? 'checked' : ''}></td>
+          <td><input type="checkbox" class="spanish" ${student.spanish ? 'checked' : ''}></td>
+          <td><input type="checkbox" class="german" ${student.german ? 'checked' : ''}></td>
+        `;
+
+        // إضافة event listeners
+        const morningCheckbox = tr.querySelector('.morning');
+        const eveningCheckbox = tr.querySelector('.evening');
+        const morningCell = morningCheckbox.parentElement;
+        const eveningCell = eveningCheckbox.parentElement;
+
+        morningCheckbox.addEventListener('change', (e) => {
+          morningCell.className = e.target.checked ? 'present' : 'absent';
+          // حفظ التغيير
+          updateStudentAttendance(student.id, 'morning_present', e.target.checked);
+        });
+
+        eveningCheckbox.addEventListener('change', (e) => {
+          eveningCell.className = e.target.checked ? 'present' : 'absent';
+          // حفظ التغيير
+          updateStudentAttendance(student.id, 'evening_present', e.target.checked);
+        });
+
+        // إضافة الصف إلى الجدول
+        studentsTableBody.appendChild(tr);
+        
+      } catch (error) {
+        console.error(`خطأ في تحميل بيانات الطالب ${student.id}:`, error);
+        // إضافة صف ببيانات افتراضية في حالة الخطأ
+        addFallbackRow(student);
+      }
+    }
+    
+    console.log('تم تحميل جميع الطلبة بنجاح');
+    
+  } catch (error) {
+    console.error('خطأ في تحميل الجدول:', error);
+  }
+}
+
+// دالة مساعدة للصف الافتراضي في حالة الخطأ
+function addFallbackRow(student) {
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td>${student.first_name} ${student.last_name}</td>
+    <td class="absent"><input type="checkbox" class="morning"></td>       
+    <td><input type="checkbox" class="math" ${student.math ? 'checked' : ''}></td>
+    <td><input type="checkbox" class="science" ${student.science ? 'checked' : ''}></td>
+    <td class="absent"><input type="checkbox" class="evening"></td>
+    <td><input type="checkbox" class="english" ${student.english ? 'checked' : ''}></td>
+    <td><input type="checkbox" class="french" ${student.french ? 'checked' : ''}></td>
+    <td><input type="checkbox" class="spanish" ${student.spanish ? 'checked' : ''}></td>
+    <td><input type="checkbox" class="german" ${student.german ? 'checked' : ''}></td>
+  `;
+  studentsTableBody.appendChild(tr);
+}
+
+// دالة لتحديث الحضور
+async function updateStudentAttendance(studentId, field, value) {
+  try {
+    await API.updateAttendance(studentId, {
+      [field]: value ? 1 : 0
+    });
+  } catch (error) {
+    console.error('خطأ في تحديث الحضور:', error);
+  }
+}
+
+  
   // إنشاء بطاقات القاعات من 1 إلى 26 مباشرة
   for (let i = 1; i <= 26; i++) {
     const card = document.createElement("div");
@@ -40,33 +135,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
 
       // عرض الطلاب في الجدول
-      studentsTableBody.innerHTML = "";
-      students.forEach(async s => {
-        const tr = document.createElement("tr");
-        const presenceAbs = await API.getAtendanceById(s.id);
-        console.log("KKKKKKKKKKKKK:: ", presenceAbs);
-        tr.innerHTML = `
-          <td>${s.first_name} ${s.last_name}</td>
-          <td class="${!s.morning_present ? "present" : "absent"}"><input type="checkbox" class="morning" ${!s.morning_present ? "checked" : ""}></td>       
-          <td><input type="checkbox" class="math" ${s.math ? "checked" : ""}></td>
-          <td><input type="checkbox" class="science" ${s.science ? "checked" : ""}></td>
-          <td class="${s.evening_present ? "present" : "absent"}"><input type="checkbox" class="evening" ${s.evening_present ? "checked" : ""}></td>
-          <td><input type="checkbox" class="english" ${s.english ? "checked" : ""}></td>
-          <td><input type="checkbox" class="french" ${s.french ? "checked" : ""}></td>
-          <td><input type="checkbox" class="spanish" ${s.spanish ? "checked" : ""}></td>
-          <td><input type="checkbox" class="german" ${s.german ? "checked" : ""}></td>
-        `;
-
-        // تحديث اللون عند تغيير الحضور
-        tr.querySelector(".morning").addEventListener("change", e => {
-          tr.querySelector(".morning").parentElement.className = e.target.checked ? "present" : "absent";
-        });
-        tr.querySelector(".evening").addEventListener("change", e => {
-          tr.querySelector(".evening").parentElement.className = e.target.checked ? "present" : "absent";
-        });
-
-        studentsTableBody.appendChild(tr);
-      });
+      loadStudentsTable();
 
       // حفظ الحضور والمواد
       saveBtn.onclick = async () => {
