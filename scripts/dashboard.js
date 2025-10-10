@@ -22,13 +22,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td>${student.first_name} ${student.last_name}</td>
-          <td class="${attendance.morning_present ? 'present' : 'absent'}">
-            <input type="checkbox" class="morning" ${attendance.morning_present ? 'checked' : ''}>
+          <td class="${student.morning_present ? 'present' : 'absent'}">
+            <input type="checkbox" class="morning" ${student.morning_present ? 'checked' : ''}>
           </td>       
           <td><input type="checkbox" class="math" ${student.math ? 'checked' : ''}></td>
           <td><input type="checkbox" class="science" ${student.science ? 'checked' : ''}></td>
           <td class="${attendance.evening_present ? 'present' : 'absent'}">
-            <input type="checkbox" class="evening" ${attendance.evening_present ? 'checked' : ''}>
+            <input type="checkbox" class="evening" ${student.evening_present ? 'checked' : ''}>
           </td>
           <td><input type="checkbox" class="english" ${student.english ? 'checked' : ''}></td>
           <td><input type="checkbox" class="french" ${student.french ? 'checked' : ''}></td>
