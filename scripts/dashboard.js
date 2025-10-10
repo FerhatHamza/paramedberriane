@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           </td>       
           <td><input type="checkbox" class="math" ${student.math ? 'checked' : ''}></td>
           <td><input type="checkbox" class="science" ${student.science ? 'checked' : ''}></td>
-          <td class="${attendance.evening_present ? 'present' : 'absent'}">
+          <td class="${student.evening_present ? 'present' : 'absent'}">
             <input type="checkbox" class="evening" ${student.evening_present ? 'checked' : ''}>
           </td>
           <td><input type="checkbox" class="english" ${student.english ? 'checked' : ''}></td>
