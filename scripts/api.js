@@ -33,4 +33,15 @@ const API = {
     if (!resp.ok) throw new Error("Erreur lors de l'enregistrement des présences");
     return await resp.json();
   },
+
+  // GET REDY 
+  getReady: async () => {
+    const resp = await fetch(`${API_BASE}/api/attendance/all`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({}),
+    });
+    if (!resp.ok) throw new Error("Erreur tarzi");
+    return await resp.json();
+  },
 };
