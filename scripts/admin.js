@@ -9,13 +9,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     
     const getReadyBtn = document.getElementById("PustBtn");
+    const getReadyBtn2 = document.getElementById("PustBtn2");
 
     async function handleClick() {
       await API.getReady();
+    }
+    async function handleClick2() {
       await API.getReady2();
     }
     
     getReadyBtn.addEventListener("click", handleClick);
+    getReadyBtn2.addEventListener("click", handleClick2);
     
     const subjTbody = document.querySelector("#subjectsTable tbody");
     stats.subjects.forEach(s => {
