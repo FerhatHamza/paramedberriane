@@ -34,6 +34,15 @@ const API = {
     return await resp.json();
   },
 
+  getReady2: async () => {
+    const resp2 = await fetch(`${API_BASE}//api/choices/all`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({}),
+    });
+    if (!resp2.ok) throw new Error("Erreur tarzi");
+    return await resp2.json();
+  }
   // GET REDY 
   getReady: async () => {
     const resp = await fetch(`${API_BASE}/api/attendance/all`, {
@@ -41,13 +50,9 @@ const API = {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({}),
     });
-    const resp2 = await fetch(`${API_BASE}//api/choices/all`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({}),
-    });
+    
     if (!resp.ok) throw new Error("Erreur tarzi");
-    if (!resp2.ok) throw new Error("Erreur tarzi");
+    
     return await resp.json();
   },
 };
