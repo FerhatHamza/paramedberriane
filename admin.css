@@ -1,9 +1,14 @@
-body {
-  font-family: "Cairo", sans-serif;
+/* ================================ */
+/* خط Tajawal للعربية والصفحة بالكامل */
+body, * {
+  font-family: 'Tajawal', sans-serif;
+  box-sizing: border-box;
   background: #f8fafc;
   margin: 0;
   color: #333;
 }
+
+/* ================================ */
 
 header {
   background: #005f73;
