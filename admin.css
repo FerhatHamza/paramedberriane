@@ -17,13 +17,6 @@ header, footer {
   text-align: center;
   font-weight: 500;
 }
-footer {
-  margin-top: 2rem;
-  border-top: 1px solid #ccc;
-}
-
-
-
 
 .dashboard {
   max-width: 900px;
