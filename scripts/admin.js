@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const tr = document.createElement("tr");
       let index = i+1;
       tr.innerHTML = `
-            <td>${index}</td>
+            <td>${i}</td>
             <td>${a.name}</td>
             <td>${a.class}</td>;
       absTbody.appendChild(tr);
