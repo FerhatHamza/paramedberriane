@@ -41,8 +41,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       tr.innerHTML = `
             <td>${i}</td>
             <td>${a.name}</td>
-            <td>${a.class}</td>
-            <td>${a.date}</td>`;
+            <td>${a.class}</td>;
       absTbody.appendChild(tr);
     });
   } catch (err) {
