@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     stats.last_absences.forEach((a, i) => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
-            <td>${i}</td>
+            <td>${i+1}</td>
             <td>${a.name}</td>
             <td>${a.class}</td>;
       absTbody.appendChild(tr);
