@@ -38,8 +38,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     const absTbody = document.querySelector("#absencesTable tbody");
     stats.last_absences.forEach((a, i) => {
       const tr = document.createElement("tr");
+      let index = i+1;
       tr.innerHTML = `
-            <td>${i+1}</td>
+            <td>${index}</td>
             <td>${a.name}</td>
             <td>${a.class}</td>;
       absTbody.appendChild(tr);
