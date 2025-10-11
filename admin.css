@@ -2,7 +2,6 @@
 /* خط Tajawal للعربية والصفحة بالكامل */
 body, * {
   font-family: 'Tajawal', sans-serif;
-
   margin: 0;
   color: #333;
 }
@@ -12,6 +11,7 @@ body, * {
 header, footer {
   background-color: #004080;
   color: white;
+  text-color: white;
   padding: 1rem;
   text-align: center;
   font-weight: 500;
