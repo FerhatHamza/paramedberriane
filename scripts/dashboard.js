@@ -160,6 +160,7 @@ async function updateStudentAttendance(studentId, field, value) {
           await API.saveAttendance(classNum, updatedStudents);
           alert("تم حفظ البيانات بنجاح!");
         } catch (err) {
+          console.log(err);
           alert("حدث خطأ أثناء الحفظ: " + err.message);
         }
       };
