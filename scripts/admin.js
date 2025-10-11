@@ -36,15 +36,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     const absTbody = document.querySelector("#absencesTable tbody");
-    let i = 1;
-    stats.last_absences.forEach((a) => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-            <td>${i}</td>
-            <td>${a.name}</td>
-            <td>${a.class}</td>;
+    stats.last_absences.forEach((a, i) => {
+     const tr = document.createElement("tr");
+      tr.innerHTML = `<td>${i + 1}</td><td>${a.name}</td><td>${a.class}</td>`;
       absTbody.appendChild(tr);
-      i++;
     });
   } catch (err) {
     console.error("Error loading stats:", err);
