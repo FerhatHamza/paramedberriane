@@ -35,7 +35,7 @@ const API = {
   },
 
   getReady2: async () => {
-    const resp2 = await fetch(`${API_BASE}//api/choices/all`, {
+    const resp2 = await fetch(`${API_BASE}/api/choices/init`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({}),
