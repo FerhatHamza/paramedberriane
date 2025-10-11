@@ -42,7 +42,7 @@ const API = {
     });
     if (!resp2.ok) throw new Error("Erreur tarzi");
     return await resp2.json();
-  }
+  },
   // GET REDY 
   getReady: async () => {
     const resp = await fetch(`${API_BASE}/api/attendance/all`, {
