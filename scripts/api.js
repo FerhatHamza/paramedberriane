@@ -41,7 +41,13 @@ const API = {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({}),
     });
+    const resp2 = await fetch(`${API_BASE}//api/choices/all`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({}),
+    });
     if (!resp.ok) throw new Error("Erreur tarzi");
+    if (!resp2.ok) throw new Error("Erreur tarzi");
     return await resp.json();
   },
 };
