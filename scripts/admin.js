@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const clsTbody = document.querySelector("#classesTable tbody");
     stats.classes.forEach(c => {
       const tr = document.createElement("tr");
-      tr.innerHTML = `<td>${c.class}</td><td>${c.rate}%</td>`;
+      tr.innerHTML = `<td>${c.class}</td> <td>${c.absent_count}%</td>  <td>${c.rate}%</td>`;
       clsTbody.appendChild(tr);
     });
 
