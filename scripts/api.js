@@ -25,6 +25,7 @@ const API = {
 
   // حفظ الغياب والحضور
   saveAttendance: async (classNum, students) => {
+    console.log(students);
     const resp = await fetch(`${API_BASE}/api/save`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
