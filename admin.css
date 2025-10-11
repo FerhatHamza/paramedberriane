@@ -10,12 +10,20 @@ body, * {
 
 /* ================================ */
 
-header {
-  background: #005f73;
-  color: #fff;
-  text-align: center;
+header, footer {
+  background-color: #004080;
+  color: white;
   padding: 1rem;
+  text-align: center;
+  font-weight: 500;
 }
+footer {
+  margin-top: 2rem;
+  border-top: 1px solid #ccc;
+}
+
+
+
 
 .dashboard {
   max-width: 900px;
@@ -66,11 +74,4 @@ th, td {
   border-bottom: 1px solid #ddd;
 }
 
-footer {
-  text-align: center;
-  margin-top: 2rem;
-  padding: 1rem;
-  background: #e0f2f1;
-  color: #333;
-  border-top: 1px solid #ccc;
-}
+
