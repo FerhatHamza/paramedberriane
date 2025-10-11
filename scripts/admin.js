@@ -38,7 +38,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     const absTbody = document.querySelector("#absencesTable tbody");
     stats.last_absences.forEach((a, i) => {
      const tr = document.createElement("tr");
-      tr.innerHTML = `<td>${i+1}</td><td>${a.nin}</td><td>${a.name}</td><td>${a.class}</td>`;
+      tr.innerHTML = `
+            <td>${i+1}</td>
+            <td>${a.nin}</td>
+            <td>${a.name}</td>
+            <td>${a.class}</td>`;
       absTbody.appendChild(tr);
     });
   } catch (err) {
